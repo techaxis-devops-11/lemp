@@ -13,22 +13,19 @@ services:
       - php
       - db
 
- #MySQL Service
   db:
-    image: mysql:5.7.22
-    container_name: db
-    restart: unless-stopped
-    tty: true
+    image: mysql:latest
+    container_name: mysql
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: samyog
+      MYSQL_DATABASE: mydatabase
+      MYSQL_USER: myuser
+      MYSQL_PASSWORD: mypassword
     ports:
       - "3306:3306"
-    environment:
-      MYSQL_DATABASE: laravel
-      MYSQL_ROOT_PASSWORD: root_password
-      SERVICE_TAGS: dev
-      SERVICE_NAME: mysql
-#    volumes:
-#      - dbdata:/var/lib/mysql/
-      #- ./mysql/my.cnf:/etc/mysql/my.cnf
+    volumes:
+      - db_data:/var/lib/mysql
 
   php:
     build: .
